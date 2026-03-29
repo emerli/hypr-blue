@@ -11,17 +11,35 @@ set -ouex pipefail
 
 # this installs a package from fedora repos
 # sostituisci il contenuto con qualcosa tipo
+dnf5 -y copr enable solopasha/hyprland
+
 dnf5 install -y \
     hyprland \
+    sddm \
+    tuned tuned-ppd \
+    kitty \
     waybar \
     wofi \
     dunst \
     swaylock \
+    hyprpolkitagent \
+    nautilus \
+    pavucontrol \
+    alsa-sof-firmware \
+    alsa-utils \
+    blueman \
+    NetworkManager-wifi iwl* \
+    nm-connection-editor-desktop \
+    gvfs \
+    gvfs-mtp \
     xdg-desktop-portal-hyprland \
     hyprpaper \
     hyprlock \
     nano \
-   bash  
+   bash
+
+systemctl enable sddm.service
+systemctl set-default graphical.target
 
 systemctl enable podman.socket
 
