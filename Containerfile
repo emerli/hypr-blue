@@ -3,7 +3,8 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/sway-atomic-main:latest
+FROM quay.io/fedora-ostree-desktops/sway-atomic:43
+#FROM ghcr.io/ublue-os/sway-atomic-main:latest
 COPY config/.config/ /etc/skel/.config/
 COPY config/.local/ /etc/skel/.local/
 

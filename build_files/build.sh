@@ -11,7 +11,7 @@ set -ouex pipefail
 
 # this installs a package from fedora repos
 # sostituisci il contenuto con qualcosa tipo
-dnf5 -y copr enable solopasha/hyprland
+dnf5 -y copr enable sdegler/hyprland
 
 dnf5 install -y \
     hyprland \
