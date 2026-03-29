@@ -53,3 +53,7 @@ systemctl enable podman.socket
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+
+
+COPY config/ /etc/skel/.config/
+
