@@ -16,6 +16,7 @@ dnf5 -y copr enable solopasha/hyprland
 dnf5 install -y \
     hyprland \
     sddm \
+    sddm-breeze \
     tuned tuned-ppd \
     kitty \
     waybar \
@@ -55,5 +56,5 @@ systemctl enable podman.socket
 systemctl enable podman.socket
 
 
-COPY config/ /etc/skel/.config/
+
 
