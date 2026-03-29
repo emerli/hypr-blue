@@ -4,7 +4,10 @@ COPY build_files /
 
 # Base Image
 FROM ghcr.io/ublue-os/sway-atomic-main:latest
-COPY config/ /etc/skel/.config/
+COPY config/.config/ /etc/skel/.config/
+COPY config/.local/ /etc/skel/.local/
+
+
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
 # FROM ghcr.io/ublue-os/bluefin-nvidia:stable
