@@ -4,9 +4,6 @@ set -ouex pipefail
 # Telegram RPM nativo
 dnf5 install -y telegram-desktop
 
-#!/bin/bash
-set -ouex pipefail
-
 # Brave Browser
 rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
@@ -20,4 +17,9 @@ gpgkey=https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 EOF
 
 dnf5 install -y brave-browser
+
+# LibreWolf — repo ufficiale
+dnf5 config-manager addrepo --from-repofile=https://repo.librewolf.net/librewolf.repo
 dnf5 install -y librewolf
+
+
