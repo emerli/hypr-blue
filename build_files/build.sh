@@ -16,7 +16,6 @@ dnf5 -y copr enable sdegler/hyprland
 dnf5 install -y \
     hyprland \
     sddm \
-    #sddm-breeze \
     tuned tuned-ppd \
     kitty \
     waybar \
