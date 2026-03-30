@@ -15,7 +15,7 @@ enabled=1
 gpgcheck=1
 gpgkey=https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 EOF
-
+mkdir -p /opt/brave.com
 dnf5 install -y brave-browser
 
 # LibreWolf — repo ufficiale

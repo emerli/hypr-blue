@@ -1,0 +1,1 @@
+sudo podman run     --rm     --privileged     --pull=newer     -v $(pwd)/output:/output     -v /var/lib/containers/storage:/var/lib/containers/storage     -v $(pwd)/config.toml:/config.toml     quay.io/centos-bootc/bootc-image-builder:latest     --type anaconda-iso     --rootfs btrfs     --config /config.toml     ghcr.io/emerli/hypr-blue:latest
