@@ -13,8 +13,28 @@ set -ouex pipefail
 # sostituisci il contenuto con qualcosa tipo
 dnf5 -y copr enable sdegler/hyprland
 
+dnf5 -y update
+
 dnf5 install -y \
     hyprland \
+    hyprland-guiutils \
+    hyprland-qt-support \
+    hyprpaper \
+    hyprlock \
+    hypridle \
+    xdg-desktop-portal-hyprland \
+    wl-clipboard \
+    mako \
+    brightnessctl \
+    playerctl \
+    pavucontrol \
+    network-manager-applet \
+    blueman \
+    wlogout \
+    libnotify \
+    fontawesome-6-brands-fonts \
+    fontawesome-6-free-fonts \
+    jetbrains-mono-fonts-all \
     sddm \
     tuned tuned-ppd \
     kitty \
@@ -27,16 +47,13 @@ dnf5 install -y \
     pavucontrol \
     alsa-sof-firmware \
     alsa-utils \
-    blueman \
     NetworkManager-wifi iwl* \
     nm-connection-editor-desktop \
     gvfs \
     gvfs-mtp \
-    xdg-desktop-portal-hyprland \
-    hyprpaper \
-    hyprlock \
     nano \
    bash
+
 
 systemctl enable sddm.service
 systemctl set-default graphical.target
