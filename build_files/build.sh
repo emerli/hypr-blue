@@ -44,7 +44,6 @@ dnf5 install -y \
     swaylock \
     hyprpolkitagent \
     nautilus \
-    pavucontrol \
     alsa-sof-firmware \
     alsa-utils \
     NetworkManager-wifi iwl* \
@@ -53,6 +52,10 @@ dnf5 install -y \
     gvfs-mtp \
     nano \
    bash
+
+dnf5 -y upgrade
+
+dnf5 -y copr disable sdegler/hyprland
 
 
 systemctl enable sddm.service
@@ -69,7 +72,7 @@ systemctl enable podman.socket
 
 #### Example for enabling a System Unit File
 
-systemctl enable podman.socket
+
 
 
 
