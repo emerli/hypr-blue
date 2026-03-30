@@ -4,7 +4,7 @@
 
 **Immutable Linux desktop, built for modern development.**
 
-[![Build](https://github.com/koji/hypr-blue/actions/workflows/build.yml/badge.svg)](https://github.com/koji/hypr-blue/actions/workflows/build.yml)
+[![Build](https://github.com/emerli/hypr-blue/actions/workflows/build.yml/badge.svg)](https://github.com/emerli/hypr-blue/actions/workflows/build.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Fedora](https://img.shields.io/badge/base-Fedora%20Atomic%2043-blue?logo=fedora)](https://fedoraproject.org/atomic-desktops/)
 [![bootc](https://img.shields.io/badge/bootc-immutable-green)](https://github.com/bootc-dev/bootc)
@@ -84,7 +84,7 @@ Il sistema si basa su tre concetti chiave:
 Su un sistema bootc esistente (Fedora Atomic, Bazzite, Bluefin...):
 
 ```bash
-sudo bootc switch ghcr.io/<tuo-username>/hypr-blue:latest
+sudo bootc switch ghcr.io/emerli/hypr-blue:latest
 sudo reboot
 ```
 
