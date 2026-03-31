@@ -1,5 +1,6 @@
-/* openSUSE Hyprland Waybar Theme */
-/* Colors: openSUSE Green #73BA25, Teal #35B9AB, Dark #173F4F */
+/* hypr-blue Waybar Theme */
+/* Fedora Blue Dark — ispirato ai colori ufficiali Fedora */
+/* Blu primario: #3c6eb4 | Blu scuro: #0e3b74 | Blu chiaro: #60a0e0 */
 
 * {
     border:        none;
@@ -8,14 +9,14 @@
     font-size:     13px;
     box-shadow:    none;
     text-shadow:   none;
-    transition-duration: 0s;
+    transition-duration: 0.2s;
 }
 
 window#waybar {
-    background-color: rgba(15, 30, 40, 0.92);
-    border-radius:    12px;
-    border:           1px solid rgba(53, 185, 171, 0.25);
-    color:            #cdd6f4;
+    background-color: rgba(8, 18, 32, 0.88);
+    border-radius:    14px;
+    border:           1px solid rgba(60, 110, 180, 0.30);
+    color:            #c8d8f0;
 }
 
 /* ── Left ─────────────────────────────────────────── */
@@ -24,15 +25,16 @@ window#waybar {
     margin:        0 4px;
     padding:       0 4px;
     border-radius: 10px;
-    background:    rgba(53, 185, 171, 0.08);
+    background:    rgba(60, 110, 180, 0.10);
+    border:        1px solid rgba(60, 110, 180, 0.15);
 }
 
 #workspaces button {
-    padding:    0 5px;
-    color:      rgba(53, 185, 171, 0.4);
-    background: transparent;
+    padding:       0 5px;
+    color:         rgba(96, 160, 224, 0.40);
+    background:    transparent;
     border-radius: 8px;
-    min-width: 24px;
+    min-width:     24px;
 }
 
 #workspaces button label {
@@ -40,13 +42,14 @@ window#waybar {
 }
 
 #workspaces button:hover {
-    background: rgba(115, 186, 37, 0.15);
-    color:      #73BA25;
+    background: rgba(60, 110, 180, 0.20);
+    color:      #60a0e0;
 }
 
 #workspaces button.active {
-    color:       #73BA25;
+    color:       #60a0e0;
     font-weight: bold;
+    background:  rgba(60, 110, 180, 0.18);
 }
 
 #workspaces button.active label {
@@ -54,25 +57,25 @@ window#waybar {
 }
 
 #workspaces button.urgent {
-    color:      #ee2e24;
-    background: rgba(238, 46, 36, 0.15);
+    color:      #ee4444;
+    background: rgba(238, 68, 68, 0.18);
 }
 
 #window {
-    color:   rgba(200, 210, 220, 0.8);
-    padding: 0 8px;
+    color:      rgba(200, 216, 240, 0.75);
+    padding:    0 8px;
     font-style: italic;
 }
 
 /* ── Center ───────────────────────────────────────── */
 
 #custom-clock {
-    color:         #73BA25;
+    color:         #60a0e0;
     font-weight:   bold;
     padding:       0 14px;
     border-radius: 10px;
-    background:    rgba(115, 186, 37, 0.08);
-    border:        1px solid rgba(115, 186, 37, 0.2);
+    background:    rgba(60, 110, 180, 0.12);
+    border:        1px solid rgba(60, 110, 180, 0.25);
 }
 
 /* ── Right ────────────────────────────────────────── */
@@ -81,13 +84,13 @@ window#waybar {
 #cpu,
 #memory,
 #temperature {
-    background: rgba(53, 185, 171, 0.08);
+    background: rgba(60, 110, 180, 0.10);
     padding:    0 8px;
     margin:     0;
 }
 
 #cpu {
-    color:         #35B9AB;
+    color:         #60a0e0;
     border-radius: 8px 0 0 8px;
     padding-left:  8px;
     padding-right: 4px;
@@ -98,37 +101,70 @@ window#waybar {
 }
 
 #memory {
-    color:   #73BA25;
+    color:   #88bce8;
     padding: 0 4px;
 }
 
 #temperature {
-    color:          #35B9AB;
-    border-radius:  0 8px 8px 0;
-    padding-left:   4px;
-    padding-right:  8px;
-    margin-right:   10px;
+    color:         #3c6eb4;
+    border-radius: 0 8px 8px 0;
+    padding-left:  4px;
+    padding-right: 8px;
+    margin-right:  10px;
 }
 
 #temperature.critical {
-    color:      #ee2e24;
-    background: rgba(238, 46, 36, 0.15);
+    color:      #ee4444;
+    background: rgba(238, 68, 68, 0.18);
+}
+
+/* Battery */
+#battery {
+    color:   #60a0e0;
+    padding: 0 8px;
+}
+
+#battery.charging {
+    color: #88cc88;
+}
+
+#battery.plugged {
+    color: #88bce8;
+}
+
+#battery.warning:not(.charging) {
+    color: #f0a500;
+}
+
+#battery.critical:not(.charging) {
+    color:      #ee4444;
+    background: rgba(238, 68, 68, 0.18);
+    border-radius: 8px;
+    animation-name:     blink;
+    animation-duration: 1s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to { color: rgba(238, 68, 68, 0.4); }
 }
 
 /* Tray e pulseaudio */
 #tray {
-    color:   #35B9AB;
-    padding: 0 8px;
+    color:       #60a0e0;
+    padding:     0 8px;
     margin-left: 6px;
 }
 
 #pulseaudio {
-    color:   #35B9AB;
+    color:   #60a0e0;
     padding: 0 6px;
 }
 
 #pulseaudio.muted {
-    color: rgba(53, 185, 171, 0.4);
+    color: rgba(96, 160, 224, 0.35);
 }
 
 #tray > .passive {
@@ -136,19 +172,20 @@ window#waybar {
 }
 
 #tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-    background-color: rgba(240, 165, 0, 0.2);
-    border-radius: 8px;
+    -gtk-icon-effect:  highlight;
+    background-color:  rgba(240, 165, 0, 0.18);
+    border-radius:     8px;
 }
 
+/* Power */
 #custom-power {
-    color:       #ee2e24;
+    color:       #ee4444;
     padding:     0 12px;
     font-size:   16px;
     margin-left: 4px;
 }
 
 #custom-power:hover {
-    background:    rgba(238, 46, 36, 0.15);
+    background:    rgba(238, 68, 68, 0.15);
     border-radius: 8px;
 }
