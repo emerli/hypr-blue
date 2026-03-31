@@ -1,0 +1,240 @@
+# Sway config - hypr-blue
+# https://swaywm.org/
+
+################
+### VARIABLES ###
+################
+
+set $terminal kitty
+set $fileManager nautilus
+set $menu ~/.config/sway/scripts/wofi-launcher.sh --show drun
+set $mod Mod4
+
+################
+### MONITORS ###
+################
+
+output eDP-1 resolution --auto position 0,0
+output * resolution --auto
+
+#################
+### AUTOSTART ###
+#################
+
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec xhost +SI:localuser:root
+exec systemctl --user start xdg-desktop-portal-wlr
+exec LC_TIME=it_IT.utf8 waybar -c ~/.config/waybar/config-sway.jsonc
+exec ~/.config/sway/scripts/monitor-switch.sh
+exec swaybg -i ~/.config/sway/wallpaper.jpg -m fill
+exec mako
+exec blueman-applet
+exec nm-applet --indicator
+
+#############################
+### ENVIRONMENT VARIABLES ###
+#############################
+
+exec_always {
+    export XCURSOR_SIZE=24
+    export QT_QPA_PLATFORM=wayland
+    export QT_QPA_PLATFORMTHEME=qt5ct
+}
+
+#####################
+### LOOK AND FEEL ###
+#####################
+
+# Gaps
+gaps inner 5
+gaps outer 20
+
+# Borders
+default_border pixel 2
+default_floating_border pixel 2
+
+# Colori
+# class                 border      bg          text        indicator   child_border
+client.focused          #33ccff     #33ccff     #ffffff     #00ff99     #33ccff
+client.unfocused        #595959     #595959     #888888     #595959     #595959
+client.focused_inactive #595959     #595959     #888888     #595959     #595959
+
+# Font
+font pango:JetBrainsMono 10
+
+#############
+### INPUT ###
+#############
+
+input "type:keyboard" {
+    xkb_layout it
+}
+
+input "type:touchpad" {
+    natural_scroll disabled
+    tap enabled
+}
+
+input "type:pointer" {
+    accel_profile flat
+    pointer_accel 0
+}
+
+#####################
+### SWAYFX EFFECTS ###
+#####################
+
+# Angoli arrotondati
+corner_radius 10
+
+# Ombre
+shadows enable
+shadow_blur_radius 4
+shadow_color #1a1a1aee
+
+# Blur
+blur enable
+blur_passes 1
+blur_radius 3
+
+# Dimming finestre inattive
+default_dim_inactive 0.0
+
+###################
+### KEYBINDINGS ###
+###################
+
+# Applicazioni
+bindsym $mod+Return exec $terminal
+bindsym $mod+q kill
+bindsym $mod+e exec $fileManager
+bindsym $mod+v floating toggle
+bindsym $mod+l exec swaylock
+bindsym $mod+d exec $menu
+
+# Focus finestre
+bindsym $mod+Left focus left
+bindsym $mod+Right focus right
+bindsym $mod+Up focus up
+bindsym $mod+Down focus down
+
+# Spostamento finestre
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Down move down
+
+# Layout
+bindsym $mod+p layout toggle split
+bindsym $mod+j layout toggle stacking tabbed
+
+# Split
+bindsym $mod+b splith
+bindsym $mod+o splitv
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Reload config
+bindsym $mod+Shift+r reload
+
+# Exit
+bindsym $mod+m exec wlogout
+
+# Switch workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# Move window to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# Scratchpad
+bindsym $mod+Shift+s move scratchpad
+bindsym $mod+s scratchpad show
+
+# Scroll workspaces con mouse
+bindsym --whole-window $mod+button4 workspace prev
+bindsym --whole-window $mod+button5 workspace next
+
+# Move/resize finestre con mouse
+floating_modifier $mod normal
+
+# Screenshots (grimshot)
+bindsym Print exec grimshot save output
+bindsym $mod+Print exec grimshot save area
+bindsym $mod+Shift+Print exec grimshot save window
+
+# Multimedia keys
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym --locked XF86MonBrightnessUp exec brightnessctl -e4 -n2 set 5%+
+bindsym --locked XF86MonBrightnessDown exec brightnessctl -e4 -n2 set 5%-
+
+# Media player
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPause exec playerctl play-pause
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioPrev exec playerctl previous
+
+##############################
+### WINDOWS AND WORKSPACES ###
+##############################
+
+##########################
+### WORKSPACE PINNING  ###
+##########################
+
+assign [app_id="^(org.telegram.desktop|TelegramDesktop)$"] workspace number 1
+assign [app_id="^(firefox|org.mozilla.firefox)$"] workspace number 2
+assign [app_id="^kitty$"] workspace number 3
+assign [app_id="^(code-url-handler|Code)$"] workspace number 4
+assign [app_id="^(org.gnome.Nautilus|nautilus)$"] workspace number 5
+assign [app_id="^(thunderbird|org.mozilla.Thunderbird)$"] workspace number 8
+assign [app_id="^(Spotify|spotify)$"] workspace number 9
+assign [app_id="^brave-browser$"] workspace number 10
+
+# XWayland apps (usano class invece di app_id)
+assign [class="^brave-browser$"] workspace number 10
+assign [class="^(Spotify|spotify)$"] workspace number 9
+
+##############################
+### WINDOW RULES           ###
+##############################
+
+# Floating per dialog e popup
+for_window [window_role="dialog"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="utility"] floating enable
+
+# Fix xwayland drags
+no_focus [app_id="^$" title="^$" tiling]
+
+##############################
+### STATUS BAR             ###
+##############################
+
+# Waybar gestisce la barra — disabilita quella di default
+bar {
+    swaybar_command waybar -c ~/.config/waybar/config-sway.jsonc
+}
