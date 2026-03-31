@@ -6,16 +6,16 @@
 ################
 
 set $terminal kitty
-set $fileManager nautilus
-set $menu ~/.config/sway/scripts/wofi-launcher.sh --show drun
+set $fileManager thunar
+set $menu wofi --show drun
 set $mod Mod4
 
 ################
 ### MONITORS ###
 ################
 
-output eDP-1 resolution --auto position 0,0
-output * resolution --auto
+#output eDP-1 resolution --auto position 0,0
+#output * resolution --auto
 
 #################
 ### AUTOSTART ###
@@ -207,8 +207,8 @@ bindsym --locked XF86AudioPrev exec playerctl previous
 assign [app_id="^(org.telegram.desktop|TelegramDesktop)$"] workspace number 1
 assign [app_id="^(firefox|org.mozilla.firefox)$"] workspace number 2
 assign [app_id="^kitty$"] workspace number 3
-assign [app_id="^(code-url-handler|Code)$"] workspace number 4
-assign [app_id="^(org.gnome.Nautilus|nautilus)$"] workspace number 5
+assign [app_id="^(code-url-handler|code)$"] workspace number 4
+assign [app_id="^(org.gnome.Nautilus|nautilus|thunar)$"] workspace number 5
 assign [app_id="^(thunderbird|org.mozilla.Thunderbird)$"] workspace number 8
 assign [app_id="^(Spotify|spotify)$"] workspace number 9
 assign [app_id="^brave-browser$"] workspace number 10
