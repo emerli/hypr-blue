@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-SCRIPT_DIR=/usr/local/bin
+SCRIPT_DIR=/usr/share/hypr-blue
 
 # Flatpak
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
