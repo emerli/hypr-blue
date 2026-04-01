@@ -150,8 +150,19 @@ gh secret set SIGNING_SECRET < cosign.key
 > [!WARNING]
 > Non committare mai `cosign.key`. È già nel `.gitignore`, ma fai attenzione.
 
+# Pubblica Immagine;Esegue build.yml che builda e pubblica latest su ghcr.io
+git push origin main
+# Pubblica Immagine;Esegue build-disk.yml che pulla la latest e builda e pubblica la iso
+git tag v0.1 && git push origin v0.1
+
+
+  1. git push origin main → aspetti che build.yml finisca e pubblichi latest su ghcr.io                        
+  2. git tag v0.1 && git push origin v0.1 → parte build-disk.yml che pullerà la latest appena pubblicata
+
+
 ---
 
 ## Licenza
 
 [Apache 2.0](LICENSE)
+
