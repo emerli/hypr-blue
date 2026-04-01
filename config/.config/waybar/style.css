@@ -47,7 +47,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color:       #60a0e0;
+    color:       #a8d8ff;
     font-weight: bold;
     background:  rgba(60, 110, 180, 0.18);
 }

@@ -5,30 +5,30 @@
     "margin-top": 6,
     "margin-left": 10,
     "margin-right": 10,
+
     "modules-left": ["sway/workspaces", "sway/window"],
     "modules-center": ["custom/clock"],
     "modules-right": ["cpu", "memory", "temperature", "tray", "pulseaudio", "battery", "custom/power"],
     "sway/workspaces": {
-        "disable-scroll": true,
         "all-outputs": false,
+        "disable-scroll": true,
         "format": "{icon}",
-        "persistent-workspaces": {
-            "*": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        },
         "format-icons": {
-            "1": "\uf086",
-            "2": "\uf0ac",
-            "3": "\uf120",
-            "4": "\uf121",
-            "5": "\uf07b",
+            "1": "󰖣",
+            "2": "󰈹",
+            "3": "",
+            "4": "󰨞",
+            "5": "󰉋",
             "6": "○",
             "7": "○",
-            "8": "\uf0e0",
-            "9": "\uf001",
-            "10": "\uf0ac",
-            "urgent": "\uf071",
-            "focused": "\uf111",
-            "default": "\uf10c"
+            "8": "󰇮",
+            "9": "󰓇",
+            "10": "󰇩",
+            "urgent": "󰀧",
+            "default": "󰊠"
+        },
+        "persistent-workspaces": {
+            "*": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         }
     },
     "sway/window": {

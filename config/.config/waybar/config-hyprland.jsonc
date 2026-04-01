@@ -24,7 +24,7 @@
             "9": "\uf001",
             "10": "\uf0ac",
             "urgent": "\uf071",
-            "default": "\uf111"
+            "default": "\uf10c"
         },
         "persistent-workspaces": {
             "*": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
