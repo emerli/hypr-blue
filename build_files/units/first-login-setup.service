@@ -1,0 +1,11 @@
+[Unit]
+Description=First login setup
+ConditionPathExists=!%h/.config/hypr-blue/.first-login-done
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/first-login-setup.sh
+ExecStartPost=/bin/bash -c 'mkdir -p %h/.config/hypr-blue && touch %h/.config/hypr-blue/.first-login-done'
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,13 @@
+trinm1709.dracula-theme-from-intellij
+PKief.material-icon-theme
+eamodio.gitlens
+mhutchie.git-graph
+usernamehw.errorlens
+alefragnani.project-manager
+redhat.ansible
+esbenp.prettier-vscode
+adpyke.codesnap
+formulahendry.code-runner
+yzhang.markdown-all-in-one
+chrmarti.regex
+ms-vscode-remote.remote-containers

@@ -23,4 +23,21 @@ dnf5 install -y brave-browser
 dnf5 config-manager addrepo --from-repofile=https://repo.librewolf.net/librewolf.repo
 dnf5 install -y librewolf
 
+# Google Chrome
+rpm --import https://dl.google.com/linux/linux_signing_key.pub
+
+cat > /etc/yum.repos.d/google-chrome.repo << 'EOF'
+[google-chrome]
+name=Google Chrome
+baseurl=https://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.google.com/linux/linux_signing_key.pub
+EOF
+
+dnf5 install -y google-chrome-stable
+
+# Thunderbird
+dnf5 install -y thunderbird
+
 

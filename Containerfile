@@ -7,6 +7,7 @@ FROM quay.io/fedora-ostree-desktops/sway-atomic:43
 #FROM ghcr.io/ublue-os/sway-atomic-main:43
 COPY config/.config/ /etc/skel/.config/
 COPY config/.local/ /etc/skel/.local/
+COPY config/.bashrc config/.bash_profile config/.bash_aliases config/.nanorc /etc/skel/
 
 
 ## Other possible base images include:

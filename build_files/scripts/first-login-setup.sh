@@ -1,0 +1,19 @@
+#!/bin/bash
+# Eseguito una volta al primo login utente tramite systemd user service
+
+set -euo pipefail
+
+SCRIPT_DIR=/usr/local/bin
+
+# Flatpak
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+while IFS= read -r app; do
+    flatpak install --user --noninteractive flathub "$app"
+done < "${SCRIPT_DIR}/flatpak-apps.txt"
+
+# VSCode extensions
+while IFS= read -r ext; do
+    code --install-extension "$ext"
+done < "${SCRIPT_DIR}/vscode-extensions.txt"
+
+notify-send "hypr-blue" "Configurazione Terminata" --icon=system-software-install

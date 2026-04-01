@@ -4,6 +4,7 @@
 Immagine Fedora Atomic immutabile custom con **Hyprland** e **SwayFX** come WM.
 Basata su `quay.io/fedora-ostree-desktops/sway-atomic:43`.
 Pubblicata su `ghcr.io/emerli/hypr-blue`.
+Orientata agli sviluppatori: VSCode, podman, glab, ansible inclusi nell'immagine.
 
 ## Obiettivo
 Replicare l'ambiente di sviluppo attuale su openSUSE Tumbleweed su una base immutabile
@@ -17,19 +18,23 @@ OSTree/bootc, con due WM installati per sperimentare e confrontare in condizioni
 
 ```
 1. IMMAGINE OSTree (build_files/)
-   └── sistema base, Hyprland, SwayFX, browser, codec, tool
+   └── sistema base, Hyprland, SwayFX, browser, codec, tool dev
+       dotfiles in /etc/skel, VSCode settings in /etc/skel/.config/
 
-2. INIT UTENTE (scripts/init-user.sh → /usr/local/bin/init-user)
-   └── configurazione generica post-installazione
+2. FIRST LOGIN (build_files/scripts/first-login-setup.sh)
+   └── systemd user service oneshot — eseguito una volta al primo login
+       installa flatpak (Spotify, Bruno) e estensioni VSCode
 
-3. CHEZMOI (repo privato utente)
-   └── dotfile personali, credenziali, preferenze
+3. ANSIBLE (ansible/) — non committato nel repo
+   └── configurazione strettamente personale:
+       SSH keys, git config, Claude config, Thunderbird profilo, Maven, VPN
 ```
 
 ### Flusso post-installazione
 ```bash
-init-user
-chezmoi init --apply https://github.com/emerli/dotfiles
+# Al primo login il servizio first-login-setup gira automaticamente.
+# Poi l'utente esegue manualmente l'Ansible per la config personale:
+cd ansible && ansible-playbook site.yml --ask-vault-pass
 ```
 
 ---
@@ -39,28 +44,52 @@ chezmoi init --apply https://github.com/emerli/dotfiles
 ```
 hypr-blue/
 ├── Containerfile
-├── build-local.sh
 ├── CLAUDE.md
+├── .gitignore                       # include ansible/
 ├── build_files/
 │   ├── build.sh                     # orchestratore
 │   ├── services.sh                  # systemctl enable
-│   └── packages/
-│       ├── base.sh                  # tool di sistema
-│       ├── hyprland.sh              # hyprland stack
-│       ├── swayfx.sh                # swayfx stack
-│       ├── browsers.sh              # brave, librewolf
-│       ├── containers.sh            # podman stack
-│       ├── fonts.sh                 # JetBrainsMono Nerd Font
-│       └── multimedia.sh            # codec, vlc, ffmpeg
+│   ├── packages/
+│   │   ├── base.sh                  # tool di sistema
+│   │   ├── hyprland.sh              # hyprland stack
+│   │   ├── sway-fx.sh               # swayfx stack
+│   │   ├── apps.sh                  # browser, telegram, thunderbird
+│   │   ├── containers.sh            # podman stack
+│   │   ├── development.sh           # VSCode, ansible, glab
+│   │   ├── fonts.sh                 # JetBrainsMono Nerd Font
+│   │   └── multimedia.sh            # codec, vlc, ffmpeg
+│   ├── scripts/
+│   │   ├── first-login-setup.sh     # script primo login
+│   │   ├── flatpak-apps.txt         # lista app flatpak
+│   │   └── vscode-extensions.txt    # lista estensioni VSCode
+│   └── units/
+│       └── first-login-setup.service
 ├── config/                          # va in /etc/skel
-│   ├── hypr/                        # hyprland.conf
-│   ├── sway/                        # sway config
-│   └── waybar/
-│       ├── config-hyprland.jsonc    # waybar per Hyprland
-│       ├── config-sway.jsonc        # waybar per Sway
-│       └── style.css                # condiviso
-└── scripts/
-    └── init-user.sh
+│   ├── .bashrc
+│   ├── .bash_profile
+│   ├── .bash_aliases
+│   ├── .nanorc
+│   ├── .config/
+│   │   ├── Code/User/settings.json  # VSCode settings
+│   │   ├── hypr/                    # hyprland.conf
+│   │   ├── sway/                    # sway config
+│   │   └── waybar/
+│   │       ├── config-hyprland.jsonc
+│   │       ├── config-sway.jsonc
+│   │       └── style.css
+│   └── .local/
+└── ansible/                         # ignorato da git
+    ├── ansible.cfg
+    ├── site.yml
+    ├── inventory
+    ├── group_vars/all/
+    │   ├── all.yml
+    │   └── vault.yml                # cifrato con ansible-vault
+    └── roles/
+        ├── dotfiles/                # SSH keys+config, Claude config, git config
+        ├── thunderbird/             # user.js profilo Gmail
+        ├── development/             # Claude Code CLI
+        └── tabaccai/                # Maven settings.xml, VPN nmcli
 ```
 
 ---
@@ -72,6 +101,12 @@ FROM scratch AS ctx
 COPY build_files /
 
 FROM quay.io/fedora-ostree-desktops/sway-atomic:43
+
+COPY config/.config/ /etc/skel/.config/
+COPY config/.local/ /etc/skel/.local/
+COPY config/.bashrc config/.bash_profile config/.bash_aliases config/.nanorc /etc/skel/
+
+RUN rm /opt && mkdir /opt
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
@@ -96,11 +131,11 @@ dnf5 -y upgrade
 
 source /ctx/packages/base.sh
 source /ctx/packages/hyprland.sh
-source /ctx/packages/swayfx.sh
-source /ctx/packages/browsers.sh
-source /ctx/packages/containers.sh
-source /ctx/packages/fonts.sh
+source /ctx/packages/sway-fx.sh
 source /ctx/packages/multimedia.sh
+source /ctx/packages/apps.sh
+source /ctx/packages/containers.sh
+source /ctx/packages/development.sh
 
 dnf5 -y copr disable sdegler/hyprland
 dnf5 -y copr disable swayfx/swayfx
@@ -108,7 +143,10 @@ dnf5 clean all
 
 source /ctx/services.sh
 
-install -Dm755 /ctx/scripts/init-user.sh /usr/local/bin/init-user
+install -Dm755 /ctx/scripts/first-login-setup.sh /usr/local/bin/first-login-setup.sh
+install -Dm644 /ctx/scripts/flatpak-apps.txt /usr/local/bin/flatpak-apps.txt
+install -Dm644 /ctx/scripts/vscode-extensions.txt /usr/local/bin/vscode-extensions.txt
+install -Dm644 /ctx/units/first-login-setup.service /usr/lib/systemd/user/first-login-setup.service
 ```
 
 ---
@@ -144,44 +182,42 @@ dnf5 install -y \
     gvfs gvfs-mtp
 ```
 
-### swayfx.sh
+### sway-fx.sh
 ```bash
-# --allowerasing necessario: swayfx conflicta con sway dei repo ufficiali
-# sway, swayidle, xdg-desktop-portal-wlr gia presenti nella base sway-atomic
 dnf5 install -y --allowerasing \
     swayfx \
-    sway-contrib        # contiene grimshot per screenshot
+    sway-contrib
 ```
 
-### browsers.sh
+### apps.sh
 ```bash
+# Telegram
+dnf5 install -y telegram-desktop
+
 # Brave
 rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-cat > /etc/yum.repos.d/brave-browser.repo << 'EOF'
-[brave-browser]
-name=Brave Browser
-baseurl=https://brave-browser-rpm-release.s3.brave.com/x86_64/
-enabled=1
-gpgcheck=1
-gpgkey=https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-EOF
-mkdir -p /opt/brave.com   # workaround problema /opt su OSTree
+# ... repo setup ...
 dnf5 install -y brave-browser
 
 # LibreWolf
 dnf5 config-manager addrepo --from-repofile=https://repo.librewolf.net/librewolf.repo
 dnf5 install -y librewolf
+
+# Google Chrome
+rpm --import https://dl.google.com/linux/linux_signing_key.pub
+# ... repo setup ...
+dnf5 install -y google-chrome-stable
+
+# Thunderbird
+dnf5 install -y thunderbird
 ```
 
-### fonts.sh
+### development.sh
 ```bash
-NERD_FONT_VERSION="3.3.0"
-curl -fLo /tmp/JetBrainsMono.tar.xz \
-    https://github.com/ryanoasis/nerd-fonts/releases/download/v${NERD_FONT_VERSION}/JetBrainsMono.tar.xz
-mkdir -p /usr/share/fonts/JetBrainsMonoNF
-tar -xf /tmp/JetBrainsMono.tar.xz -C /usr/share/fonts/JetBrainsMonoNF
-rm /tmp/JetBrainsMono.tar.xz
-fc-cache -fv
+# VSCode
+rpm --import https://packages.microsoft.com/keys/microsoft.asc
+# ... repo setup ...
+dnf5 install -y code ansible glab
 ```
 
 ### containers.sh
@@ -191,26 +227,21 @@ dnf5 install -y \
     slirp4netns fuse-overlayfs
 ```
 
+### fonts.sh
+```bash
+# JetBrainsMono Nerd Font da GitHub releases
+curl -fLo /tmp/JetBrainsMono.tar.xz \
+    https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/JetBrainsMono.tar.xz
+mkdir -p /usr/share/fonts/JetBrainsMonoNF
+tar -xf /tmp/JetBrainsMono.tar.xz -C /usr/share/fonts/JetBrainsMonoNF
+fc-cache -fv
+```
+
 ### multimedia.sh
 ```bash
-dnf5 install -y \
-    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-dnf5 groupupdate -y core multimedia sound-and-video \
-    --setopt='install_weak_deps=False' \
-    --exclude='PackageKit-gstreamer-plugin' \
-    --allowerasing
-
-dnf5 swap -y ffmpeg-free ffmpeg --allowerasing
-
-dnf5 install -y \
-    vlc ffmpeg ffmpeg-libs libva libva-utils \
-    gstreamer1-plugins-bad-free gstreamer1-plugins-good \
-    gstreamer1-plugins-base gstreamer1-plugin-openh264 \
-    gstreamer1-libav lame
-
-dnf5 swap -y libva-intel-media-driver intel-media-driver --allowerasing
+# RPMFusion free + nonfree
+# dnf5 groupupdate multimedia sound-and-video
+# ffmpeg, vlc, gstreamer plugins, intel-media-driver
 ```
 
 ---
@@ -219,6 +250,7 @@ dnf5 swap -y libva-intel-media-driver intel-media-driver --allowerasing
 
 ```bash
 systemctl enable sddm.service
+systemctl --global enable first-login-setup.service
 systemctl set-default graphical.target
 systemctl enable podman.socket
 systemctl enable fstrim.timer
@@ -227,17 +259,56 @@ systemctl enable firewalld
 
 ---
 
+## first-login-setup
+
+Servizio systemd user **oneshot** abilitato globalmente. Eseguito una sola volta al primo login.
+Guard file: `~/.config/hypr-blue/.first-login-done`
+
+```
+build_files/scripts/
+├── first-login-setup.sh      # script principale
+├── flatpak-apps.txt          # una app per riga (com.spotify.Client, ...)
+└── vscode-extensions.txt     # una estensione per riga
+```
+
+Al termine invia notifica via `notify-send`: **"Configurazione Terminata"**
+
+Per aggiungere flatpak o estensioni: editare i rispettivi `.txt`.
+
+---
+
+## Ansible (configurazione personale)
+
+Non committato nel repo (in `.gitignore`). Da eseguire manualmente dopo il primo login.
+
+```bash
+cd ansible && ansible-playbook site.yml --ask-vault-pass
+```
+
+### Roles
+| Role | Contenuto |
+|---|---|
+| `dotfiles` | SSH keys+config, Claude CLAUDE.md+settings.json, git global config |
+| `thunderbird` | user.js per profilo Gmail (da eseguire dopo primo avvio TB: `--tags thunderbird`) |
+| `development` | Claude Code CLI |
+| `tabaccai` | ~/.m2/settings.xml, VPN Tabaccai via nmcli |
+
+### vault.yml
+Cifrato con `ansible-vault`. Contiene le chiavi SSH private.
+
+---
+
 ## Configurazioni WM
 
 ### Hyprland
-- File: `config/hypr/hyprland.conf`
+- File: `config/.config/hypr/hyprland.conf`
 - COPR: `sdegler/hyprland` (solopasha abbandonato alla 0.51)
 - Versione: 0.51 — usa sintassi `windowrulev2` NON blocchi `windowrule {}`
 - Autostart waybar: `exec-once = waybar -c ~/.config/waybar/config-hyprland.jsonc`
 - Polkit: `exec-once = systemctl --user start hyprpolkitagent`
 
 ### SwayFX
-- File: `config/sway/config`
+- File: `config/.config/sway/config`
 - Drop-in replacement di Sway — stessa sintassi config
 - Effetti: `corner_radius`, `shadows`, `blur`, `default_dim_inactive`
 - Autostart waybar: `exec waybar -c ~/.config/waybar/config-sway.jsonc`
@@ -305,44 +376,12 @@ Solo monitor intero — no window picking.
 
 ---
 
-## init-user.sh
-
-Script disponibile come `/usr/local/bin/init-user`. Esegue:
-1. `loginctl enable-linger`
-2. `podman.socket` utente
-3. `DOCKER_HOST` in `.bashrc`
-4. `~/.config/containers/containers.conf` e `registries.conf`
-5. Flathub remote utente
-6. Flatpak utente: Telegram, Spotify, Postman, Bruno, Insomnia
-7. Estensioni VSCode
-8. git user.name/email interattivo
-
----
-
-## VSCode — packages/dev.sh (da aggiungere)
-
-```bash
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
-cat > /etc/yum.repos.d/vscode.repo << 'EOF'
-[code]
-name=Visual Studio Code
-baseurl=https://packages.microsoft.com/yumrepos/vscode
-enabled=1
-gpgcheck=1
-gpgkey=https://packages.microsoft.com/keys/microsoft.asc
-EOF
-dnf5 install -y code
-```
-
----
-
 ## Problemi aperti
 
 | Problema | Stato | Note |
 |---|---|---|
-| Brave RPM fallisce su OSTree | Workaround | `mkdir -p /opt/brave.com` prima dell'install |
+| Brave RPM fallisce su OSTree | Workaround | `rm /opt && mkdir /opt` nel Containerfile |
 | Hyprland 0.51 invece di 0.53 | Aperto | COPR `sdegler` piu aggiornato di `solopasha` |
-| `packages/dev.sh` con VSCode | Da fare | Repo Microsoft da aggiungere |
 | Tema waybar Fedora | Da fare | Dopo che tutto funziona |
 | style.css waybar | Da fare | Koji deve mandare il suo da Tumbleweed |
 
@@ -352,7 +391,7 @@ dnf5 install -y code
 
 ### Build locale
 ```bash
-./build-local.sh
+./build_files/build_local.sh
 # build + tag + push su registry locale localhost:5000
 ```
 
