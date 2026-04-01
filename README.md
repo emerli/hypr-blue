@@ -15,11 +15,15 @@
 
 ## Cos'è hypr-blue?
 
-**hypr-blue** è un'immagine OCI bootc basata su Fedora Atomic, con **Hyprland** come desktop environment e un setup completo per lo sviluppo con **Dev Containers**.
+**hypr-blue** è un'immagine OCI bootc basata su Fedora Atomic, con **Hyprland** e **Sway fx** come desktop environment e un setup completo per lo sviluppo con **Dev Containers**.
 
 Il sistema è immutabile: le modifiche al sistema operativo avvengono tramite rebuild dell'immagine e atomic update, non tramite modifiche manuali. Ogni tool di sviluppo gira dentro container, mantenendo il sistema pulito e riproducibile.
 
 ---
+## Modello dei rilasci
+
+**hypr-blue** è rolling e i rilasci avvengono tramite rpm-ostree e periodicamente vengono rilasciare delle immagini iso .
+
 
 ## Stack
 
@@ -50,6 +54,22 @@ Il sistema è immutabile: le modifiche al sistema operativo avvengono tramite re
 - [Brave](https://brave.com/) — browser principale
 - [LibreWolf](https://librewolf.net/) — browser privacy-first
 - [Telegram](https://telegram.org/) — messaggistica
+
+---
+
+## Cosa è incluso
+
+### Window Manager & Desktop
+- Hyprland + SwayFX, Waybar, Kitty, Wofi, Mako, Hyprlock, Hypridle, SDDM
+
+### Browser
+- Brave, LibreWolf, Google Chrome
+
+### Sviluppo
+- VS Code, Podman (rootless), Ansible, glab
+
+### App & Comunicazione
+- Telegram, Thunderbird, Spotify, Bruno
 
 ---
 
@@ -157,7 +177,7 @@ git tag v0.1 && git push origin v0.1
 
 
   1. git push origin main → aspetti che build.yml finisca e pubblichi latest su ghcr.io                        
-  2. git tag v0.1 && git push origin v0.1 → parte build-disk.yml che pullerà la latest appena pubblicata
+  2. git tag 20250401 && git push origin 20250401 → parte build-disk.yml che pullerà la latest appena pubblicata
 
 
 ---

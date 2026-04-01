@@ -17,7 +17,7 @@ on:
           - arm64
   push:
     tags:
-      - 'v*'
+      - '[0-9]*'
   pull_request:
     branches:
       - main
@@ -101,12 +101,16 @@ jobs:
           compression-level: 0
           overwrite: true
       
+      - name: Get build date
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        run: echo "BUILD_DATE=$(date +%Y%m%d)" >> ${GITHUB_ENV}
+
       - name: Create GitHub Release
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.build.outputs.output-directory }}/**/*.iso
-          name: hypr-blue-${{ github.ref_name }}
+          name: hypr-blue-${{ env.BUILD_DATE }}
           tag_name: ${{ github.ref_name }}
           fail_on_unmatched_files: true
 
