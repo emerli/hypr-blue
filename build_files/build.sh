@@ -19,12 +19,12 @@ dnf5 -y copr disable sdegler/hyprland
 dnf5 -y copr disable swayfx/swayfx
 dnf5 clean all
 
-source /ctx/services.sh
-
 install -Dm755 /ctx/scripts/first-login-setup.sh /usr/local/bin/first-login-setup.sh
 install -Dm644 /ctx/scripts/flatpak-apps.txt /usr/local/bin/flatpak-apps.txt
 install -Dm644 /ctx/scripts/vscode-extensions.txt /usr/local/bin/vscode-extensions.txt
 install -Dm644 /ctx/units/first-login-setup.service /usr/lib/systemd/user/first-login-setup.service
+
+source /ctx/services.sh
 
 
 
