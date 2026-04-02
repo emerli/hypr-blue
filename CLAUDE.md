@@ -384,6 +384,7 @@ Solo monitor intero — no window picking.
 | Hyprland 0.51 invece di 0.53 | Aperto | COPR `sdegler` piu aggiornato di `solopasha` |
 | Tema waybar Fedora | Da fare | Dopo che tutto funziona |
 | style.css waybar | Da fare | Koji deve mandare il suo da Tumbleweed |
+| ISO > 2GB, release GitHub disabilitata | Chiuso | La base `sway-atomic:43` pesa già 2.1GB compressa — impossibile stare sotto i 2GB senza cambiare base. Distribuzione via `rpm-ostree rebase` da ghcr.io è il metodo corretto per bootc/OSTree. |
 
 ---
 

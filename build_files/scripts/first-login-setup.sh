@@ -16,4 +16,10 @@ while IFS= read -r ext; do
     code --install-extension "$ext"
 done < "${SCRIPT_DIR}/vscode-extensions.txt"
 
+# Developer tools
+curl -fsSL https://claude.ai/install.sh | bash
+curl -fsSL https://mise.run | sh
+curl -fsSL https://opencode.ai/install | sh
+~/.local/bin/mise use --global ansible glab
+
 notify-send "hypr-blue" "Configurazione Terminata" --icon=system-software-install
