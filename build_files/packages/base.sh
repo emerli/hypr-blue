@@ -22,4 +22,7 @@ dnf5 install -y \
     plocate \
     firewalld \
     thunar \
-    mousepad
+    mousepad \
+    fontawesome-6-brands-fonts \
+    fontawesome-6-free-fonts \
+    jetbrains-mono-fonts-all
