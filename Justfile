@@ -86,7 +86,8 @@ sudoif command *args:
 #
 
 # Build the image using the specified parameters
-build $target_image=image_name $tag=default_tag:
+# variant: hyprland or swayfx
+build $target_image=image_name $tag=default_tag variant="hyprland":
     #!/usr/bin/env bash
 
     BUILD_ARGS=()
@@ -98,6 +99,7 @@ build $target_image=image_name $tag=default_tag:
         "${BUILD_ARGS[@]}" \
         --pull=newer \
         --tag "${target_image}:${tag}" \
+        --file "Containerfile.${variant}" \
         .
 
 # Command: _rootful_load_image
