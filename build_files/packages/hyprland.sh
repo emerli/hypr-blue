@@ -29,7 +29,6 @@ dnf5 install -y \
     dunst \
     swaylock \
     hyprpolkitagent \
-    nautilus \
     alsa-sof-firmware \
     alsa-utils \
     NetworkManager-wifi iwl* \

@@ -8,6 +8,7 @@ dnf5 -y copr enable swayfx/swayfx
 dnf5 -y upgrade
 
 source /ctx/packages/base.sh
+source /ctx/packages/fonts.sh
 source /ctx/packages/hyprland.sh
 source /ctx/packages/sway-fx.sh
 source /ctx/packages/multimedia.sh
