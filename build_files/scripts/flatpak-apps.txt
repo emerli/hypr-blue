@@ -1,4 +1,6 @@
 org.libreoffice.LibreOffice
+org.videolan.VLC
+com.obsproject.Studio
 com.spotify.Client
 com.usebruno.Bruno
 org.telegram.desktop
