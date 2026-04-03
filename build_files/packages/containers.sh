@@ -1,10 +1,6 @@
 #!/bin/bash
 set -ouex pipefail
 
-dnf5 install -y \
-    podman \
-    podman-compose \
-    buildah \
-    skopeo \
-    slirp4netns \
-    fuse-overlayfs
+# ublue base già include: podman, buildah, skopeo, slirp4netns, fuse-overlayfs
+
+dnf5 install -y podman-compose

@@ -1,7 +1,7 @@
 FROM scratch AS ctx
 COPY build_files /
 
-FROM quay.io/fedora-ostree-desktops/sway-atomic:43
+FROM ghcr.io/ublue-os/base-main:43
 
 COPY config/common/.config/ /etc/skel/.config/
 COPY config/hyprland/.config/ /etc/skel/.config/

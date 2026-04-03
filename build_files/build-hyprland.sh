@@ -7,6 +7,7 @@ dnf5 -y copr enable sdegler/hyprland
 dnf5 -y upgrade
 
 source /ctx/packages/base.sh
+source /ctx/packages/fonts.sh
 source /ctx/packages/hyprland.sh
 source /ctx/packages/multimedia.sh
 source /ctx/packages/apps.sh

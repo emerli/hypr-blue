@@ -1,3 +1,4 @@
+org.libreoffice.LibreOffice
 com.spotify.Client
 com.usebruno.Bruno
 org.telegram.desktop
