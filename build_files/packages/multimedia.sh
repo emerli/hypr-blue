@@ -10,7 +10,7 @@ dnf5 install -y \
     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 dnf5 install -y --allowerasing \
-    vlc \
+    vlc vlc-plugins-freeworld \
     gstreamer1-plugin-openh264 \
     lame
 
