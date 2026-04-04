@@ -1,5 +1,4 @@
-# Mako notification config — openSUSE Tumbleweed style
-# Colori ispirati alla palette ufficiale openSUSE + Breeze Dark
+# Mako notification config — Catppuccin Mocha
 
 # Posizione e dimensioni
 anchor=top-right
@@ -10,10 +9,10 @@ height=150
 border-size=2
 border-radius=8
 
-# Colori base (Breeze Dark / openSUSE)
-background-color=#1e2229ee
-text-color=#eff0f1
-border-color=#73ba25cc
+# Colori base (Catppuccin Mocha)
+background-color=#1e1e2eee
+text-color=#cdd6f4
+border-color=#89b4facc
 
 # Tipografia
 font=JetBrains Mono 11
@@ -26,7 +25,7 @@ sort=-time
 
 # Icone
 icons=1
-icon-path=/usr/share/icons/breeze-dark
+icon-path=/usr/share/icons/Papirus-Dark
 max-icon-size=64
 
 # Formato
@@ -34,15 +33,15 @@ format=<b>%s</b>\n%b
 markup=1
 
 [urgency=low]
-border-color=#4d5057cc
+border-color=#45475acc
 default-timeout=3000
 
 [urgency=normal]
-border-color=#73ba25cc
+border-color=#89b4facc
 default-timeout=5000
 
 [urgency=critical]
-border-color=#da4453ff
-background-color=#2a1a1aee
+border-color=#f38ba8ff
+background-color=#2a1a1eee
 text-color=#ffffff
 default-timeout=0

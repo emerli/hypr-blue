@@ -13,6 +13,7 @@ source /ctx/packages/multimedia.sh
 source /ctx/packages/apps.sh
 source /ctx/packages/containers.sh
 source /ctx/packages/development.sh
+source /ctx/packages/themes.sh
 
 dnf5 -y copr disable swayfx/swayfx
 dnf5 clean all
