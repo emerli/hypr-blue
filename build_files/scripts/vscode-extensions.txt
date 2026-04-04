@@ -1,4 +1,4 @@
-trinm1709.dracula-theme-from-intellij
+Catppuccin.catppuccin-vsc
 PKief.material-icon-theme
 eamodio.gitlens
 mhutchie.git-graph

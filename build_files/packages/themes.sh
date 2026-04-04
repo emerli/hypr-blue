@@ -24,8 +24,8 @@ rm /tmp/catppuccin-cursors.zip
 
 # ── Papirus folders: colori Catppuccin Mocha Blue ────────────────────────────
 # TODO: verificare il nome colore corretto con `papirus-folders -l`
-# curl -fLo /tmp/papirus-folders \
-#     "https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-folders/master/papirus-folders"
-# chmod +x /tmp/papirus-folders
-# /tmp/papirus-folders --theme Papirus-Dark --color cat-mocha-blue
-# rm /tmp/papirus-folders
+curl -fLo /tmp/papirus-folders \
+    "https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-folders/refs/heads/master/papirus-folders"
+chmod +x /tmp/papirus-folders
+/tmp/papirus-folders --theme Papirus-Dark --color Blue
+rm /tmp/papirus-folders

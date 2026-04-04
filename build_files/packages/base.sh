@@ -18,10 +18,10 @@ dnf5 install -y \
     wlogout brightnessctl playerctl mako \
     gvfs gvfs-client gvfs-mtp gvfs-smb gvfs-gphoto2 \
     grim grimshot slurp \
-    kanshi wlr-randr wlsunset xdg-user-dirs \
+    kanshi wlr-randr wlsunset xdg-user-dirs xsettingsd \
     fontawesome-6-brands-fonts fontawesome-6-free-fonts \
     jetbrains-mono-fonts-all \
-    thunar mousepad thunar-archive-plugin thunar-volman tumbler \
+    thunar mousepad thunar-archive-plugin thunar-volman tumbler xarchiver \
     catfish gigolo ristretto evince foliate \
     system-config-printer \
     fprintd fprintd-pam \
