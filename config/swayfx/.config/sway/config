@@ -41,7 +41,7 @@ exec_always {
     export XCURSOR_THEME=catppuccin-mocha-dark-cursors
     export QT_QPA_PLATFORM=wayland
     export QT_QPA_PLATFORMTHEME=qt5ct
-    gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-mocha-standard-blue-dark'
+    gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-mocha-blue-standard+default'
     gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
     gsettings set org.gnome.desktop.interface cursor-theme 'catppuccin-mocha-dark-cursors'
     gsettings set org.gnome.desktop.interface cursor-size 24

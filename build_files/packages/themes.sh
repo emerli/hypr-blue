@@ -7,7 +7,7 @@ dnf5 install -y papirus-icon-theme
 # ── Catppuccin GTK theme ──────────────────────────────────────────────────────
 # Tema GTK3 + GTK4 (include override per libadwaita)
 CATPPUCCIN_GTK_TAG="v1.0.3"
-CATPPUCCIN_GTK_NAME="catppuccin-mocha-standard-blue-dark"
+CATPPUCCIN_GTK_NAME="catppuccin-mocha-blue-standard+default"
 curl -fLo /tmp/catppuccin-gtk.zip \
     "https://github.com/catppuccin/gtk/releases/download/${CATPPUCCIN_GTK_TAG}/${CATPPUCCIN_GTK_NAME}.zip"
 mkdir -p /usr/share/themes
