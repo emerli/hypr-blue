@@ -38,8 +38,14 @@ exec nm-applet --indicator
 
 exec_always {
     export XCURSOR_SIZE=24
+    export XCURSOR_THEME=catppuccin-mocha-dark-cursors
     export QT_QPA_PLATFORM=wayland
     export QT_QPA_PLATFORMTHEME=qt5ct
+    gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-mocha-standard-blue-dark'
+    gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+    gsettings set org.gnome.desktop.interface cursor-theme 'catppuccin-mocha-dark-cursors'
+    gsettings set org.gnome.desktop.interface cursor-size 24
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 }
 
 #####################
@@ -54,11 +60,11 @@ gaps outer 20
 default_border pixel 2
 default_floating_border pixel 2
 
-# Colori
+# Colori (Catppuccin Mocha)
 # class                 border      bg          text        indicator   child_border
-client.focused          #33ccff     #33ccff     #ffffff     #00ff99     #33ccff
-client.unfocused        #595959     #595959     #888888     #595959     #595959
-client.focused_inactive #595959     #595959     #888888     #595959     #595959
+client.focused          #89b4fa     #313244     #cdd6f4     #94e2d5     #89b4fa
+client.unfocused        #45475a     #1e1e2e     #6c7086     #45475a     #45475a
+client.focused_inactive #45475a     #313244     #6c7086     #45475a     #45475a
 
 # Font
 font pango:JetBrainsMono 10
@@ -81,6 +87,8 @@ input "type:pointer" {
     pointer_accel 0
 }
 
+seat * xcursor_theme catppuccin-mocha-dark-cursors 24
+
 #####################
 ### SWAYFX EFFECTS ###
 #####################
@@ -91,7 +99,7 @@ corner_radius 10
 # Ombre
 shadows enable
 shadow_blur_radius 4
-shadow_color #1a1a1aee
+shadow_color #11111bee
 
 # Blur
 blur enable
