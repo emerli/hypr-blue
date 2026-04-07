@@ -75,7 +75,7 @@
     "custom/power": {
         "format": "\uf011",
         "tooltip": false,
-        "on-click": "wlogout"
+        "on-click": "wlogout -b 3 -T 350 -B 350 -L 650 -R 650"
     },
     "battery": {
         "states": {

@@ -5,9 +5,15 @@
 }
 
 window#wofi {
-    background-color: #1e1e2e;
-    border: 1px solid #313244;
+    background-color: transparent;
     border-radius: 12px;
+}
+
+#outer-box {
+    background-color: #1e1e2e;
+    border: 1px solid #585b70;
+    border-radius: 10px;
+    padding: 4px;
 }
 
 #input {
@@ -30,10 +36,6 @@ window#wofi {
 
 #inner-box {
     background-color: transparent;
-}
-
-#outer-box {
-    padding: 4px;
 }
 
 .entry {

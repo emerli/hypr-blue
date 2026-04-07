@@ -302,8 +302,8 @@ Cifrato con `ansible-vault`. Contiene le chiavi SSH private.
 
 ### Hyprland
 - File: `config/.config/hypr/hyprland.conf`
-- COPR: `sdegler/hyprland` (solopasha abbandonato alla 0.51)
-- Versione: 0.51 — usa sintassi `windowrulev2` NON blocchi `windowrule {}`
+- COPR: `sdegler/hyprland`
+- Versione: 0.54.3 — usa blocchi `windowrule {}` e `layerrule = rule, match:namespace ^pattern$`
 - Autostart waybar: `exec-once = waybar -c ~/.config/waybar/config-hyprland.jsonc`
 - Polkit: `exec-once = systemctl --user start hyprpolkitagent`
 
