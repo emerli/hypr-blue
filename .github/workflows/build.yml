@@ -30,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        variant: [hyprland, swayfx]
+        variant: [hyprland]
 
     permissions:
       contents: read
