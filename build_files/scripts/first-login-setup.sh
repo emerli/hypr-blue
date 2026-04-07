@@ -17,6 +17,12 @@ flatpak override --user --filesystem=/usr/share/icons:ro
 flatpak override --user --filesystem=xdg-config/gtk-3.0:ro
 flatpak override --user --filesystem=xdg-config/gtk-4.0:ro
 
+# GTK theme via gsettings (per flatpak su desktop non-GNOME)
+gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-mocha-blue-standard+default'
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+gsettings set org.gnome.desktop.interface cursor-theme 'catppuccin-mocha-dark-cursors'
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
 # VSCode extensions
 while IFS= read -r ext; do
     code --install-extension "$ext"
