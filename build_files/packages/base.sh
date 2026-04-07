@@ -8,7 +8,7 @@ set -ouex pipefail
 dnf5 install -y \
     git neovim \
     7zip meld ripgrep inotify-tools wev hdparm plocate \
-    openconnect NetworkManager-openconnect \
+    openconnect NetworkManager-openconnect NetworkManager-openconnect-gnome \
     tuned tuned-ppd tuned-switcher \
     sddm \
     mate-polkit \
